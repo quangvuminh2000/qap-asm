@@ -64,6 +64,20 @@ python scripts/hexaly/qap.py <instance_directory> [output_file] [time_limit]
 - `output_file`: (Optional) Path to save the solution
 - `time_limit`: (Optional) Time limit in seconds (default: 5)
 
+### 3. Genetic Algorithm (GA) Solver (`ga_qa.py`)
+
+**Usage:**
+```bash
+python scripts/ga/ga_qa.py <instance_directory>
+```
+
+**Parameters:**
+You can change the parameters in the `scripts/ga/config.py` file.
+- `POPULATION_SIZE`: Number of individuals in the population (default: 10)
+- `CROSSOVER_PROBABILITY`: Probability of crossover (default: 0.9)
+- `MUTATION_PROBABILITY`: Probability of mutation (default: 0.1)
+- `NUMBER_OF_GENERATIONS`: Number of generations (default: 200)
+
 ## Input File Format
 
 The input files should follow this format:
@@ -80,21 +94,6 @@ The solvers output:
 4. (Optional) Solution saved to a file in the format:
    - First line: n objValue
    - Second line: permutation p
-
-### 3. Genetic Algorithm (GA) Solver (`ga_qa.py`)
-
-**Usage:**
-```bash
-python scripts/ga/ga_qa.py <instance_directory>
-```
-
-**Parameters:**
-You can change the parameters in the `scripts/ga/config.py` file.
-- `POPULATION_SIZE`: Number of individuals in the population (default: 10)
-- `CROSSOVER_PROBABILITY`: Probability of crossover (default: 0.9)
-- `MUTATION_PROBABILITY`: Probability of mutation (default: 0.1)
-- `NUMBER_OF_GENERATIONS`: Number of generations (default: 200)
-
 
 ## Notes
 
