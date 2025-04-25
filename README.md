@@ -6,11 +6,13 @@ This repository contains multiple implementations of solvers for the Quadratic A
 
 - `scripts/acs/`: Contains Ant Colony System (ACS) based solvers
 - `scripts/hexaly/`: Contains a solver using the Hexaly optimization platform
+- `scripts/ga/`: Contains a solver using the Genetic Algorithm (GA)
 
 ## Requirements
 
 - Python 3.x
 - NumPy
+- tqdm
 - Hexaly Optimizer (for hexaly solver)
 
 ## Available Solvers
@@ -79,13 +81,28 @@ The solvers output:
    - First line: n objValue
    - Second line: permutation p
 
+### 3. Genetic Algorithm (GA) Solver (`ga_qa.py`)
+
+**Usage:**
+```bash
+python scripts/ga/ga_qa.py <instance_directory>
+```
+
+**Parameters:**
+You can change the parameters in the `scripts/ga/config.py` file.
+- `POPULATION_SIZE`: Number of individuals in the population (default: 10)
+- `CROSSOVER_PROBABILITY`: Probability of crossover (default: 0.9)
+- `MUTATION_PROBABILITY`: Probability of mutation (default: 0.1)
+- `NUMBER_OF_GENERATIONS`: Number of generations (default: 200)
+
+
 ## Notes
 
-- The ACS and HAS implementations are metaheuristic approaches that may find good solutions but not necessarily optimal ones
+- The ACS, HAS and GA implementations are metaheuristic approaches that may find good solutions but not necessarily optimal ones
 - The Hexaly solver is a commercial optimization tool that may provide better solutions but requires a license
 - All implementations support parallel processing where applicable
 - The solvers include various local search improvements and optimization techniques
-- For ACS and HAS solvers, parameters are hardcoded in the scripts and cannot be modified via command line
+- For ACS, HAS and GA solvers, parameters are hardcoded in the scripts and cannot be modified via command line
 
 ## Example Usage
 
@@ -98,4 +115,7 @@ python scripts/acs/has_qa.py instances/
 
 # Run Hexaly solver on all instances in a directory
 python scripts/hexaly/qap.py instances/ solution.txt 60
+
+# Run GA solver on all instances in a directory
+python scripts/ga/ga_qa.py instances/
 ```
