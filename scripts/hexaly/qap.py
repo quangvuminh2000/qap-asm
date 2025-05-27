@@ -68,7 +68,7 @@ for instance_name in os.listdir(instance_dir):
             if obj.value == 0:
                 print("\tGap: 0.00%")
             else:
-                print("\tGap: 100.00%")
+                print("\tGap: inf%")
         else:
             print("\tGap: {:.2f}%".format(abs(obj.value - BKS) / BKS * 100))
 

@@ -1,5 +1,4 @@
-import numpy as np, random, math, sys, os
-from glob import glob
+import numpy as np, random, sys, os
 
 
 def read_instance(file_path):
@@ -169,6 +168,6 @@ if __name__ == "__main__":
             if best_f == 0:
                 print("\tGap: 0.00%")
             else:
-                print("\tGap: 100.00%")
+                print("\tGap: inf%")
         else:
             print("\tGap: {:.2f}%".format(abs(best_f - BKS) / BKS * 100))

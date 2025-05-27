@@ -183,6 +183,6 @@ if __name__ == "__main__":
             if best_cost == 0:
                 print("\tGap: 0.00%")
             else:
-                print("\tGap: 100.00%")
+                print("\tGap: inf%")
         else:
             print("\tGap: {:.2f}%".format(abs(best_cost - BKS) / BKS * 100))
