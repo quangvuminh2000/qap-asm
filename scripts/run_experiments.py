@@ -9,6 +9,7 @@ import numpy as np
 from utils import read_instance
 from utils.instance_utils import load_config
 from heuristics import has_qa, ant_colony_optimization, ga_qa
+from hexaly_qap import hexaly_qap
 
 from argparse import ArgumentParser
 
@@ -20,6 +21,7 @@ ALGO_DICT: Dict[str, Callable] = {
     "hybrid": has_qa,
     "acs": ant_colony_optimization,
     "ga": ga_qa,
+    "hexaly": hexaly_qap
 }
 
 CONFIG_DICT: Dict[str, Any] = {
@@ -64,8 +66,8 @@ def experiment(
 
         file_it = iter(read_instance(instance_file))
         n = next(file_it)
-        F = np.array([[next(file_it) for _ in range(n)] for _ in range(n)])
         D = np.array([[next(file_it) for _ in range(n)] for _ in range(n)])
+        F = np.array([[next(file_it) for _ in range(n)] for _ in range(n)])
 
         if not os.path.exists(solution_file):
             print(
@@ -139,7 +141,7 @@ if __name__ == "__main__":
         "--algorithm",
         choices=ALGO_DICT.keys(),
         type=str,
-        help="Algorithm to run: 'hybrid', 'acs', or 'ga'",
+        help="Algorithm to run: 'hybrid', 'acs', 'ga' or 'hexaly'",
     )
     parser.add_argument(
         "-i", "--instance_dir", help="Directory containing the instances to solve"
