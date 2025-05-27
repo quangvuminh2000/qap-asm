@@ -30,7 +30,7 @@ This implementation uses Ant Colony Optimization to solve QAP problems.
 python scripts/heuristics/acs/acs_qa.py <instance_directory>
 ```
 
-**Parameters (hardcoded in the script):**
+**Parameters:**
 
 - `colony_size`: Number of ants (default: 10)
 - `iterations`: Number of iterations (default: 100)
@@ -49,7 +49,7 @@ Hybrid Ant System implementation for QAP with local search improvements.
 python scripts/heuristics/acs/has_qa.py <instance_directory>
 ```
 
-**Parameters (hardcoded in the script):**
+**Parameters:**
 
 - `n_ants`: Number of ants (default: 10)
 - `iters`: Number of iterations (default: 100)
@@ -103,14 +103,14 @@ python scripts/run_experiments.py --help
 Output:
 
 ```txt
-usage: run_experiments.py [-h] [-alg {hybrid,acs,ga}] [-i INSTANCE_DIR]
+usage: run_experiments.py [-h] [-alg {hybrid,acs,ga,hexaly}] [-i INSTANCE_DIR]
 
 Run experiments on QAP algorithms
 
 optional arguments:
   -h, --help            show this help message and exit
-  -alg {hybrid,acs,ga}, --algorithm {hybrid,acs,ga}
-                        Algorithm to run: 'hybrid', 'acs', or 'ga'
+  -alg {hybrid,acs,ga,hexaly}, --algorithm {hybrid,acs,ga,hexaly}
+                        Algorithm to run: 'hybrid', 'acs', 'ga', or 'hexaly'
   -i INSTANCE_DIR, --instance_dir INSTANCE_DIR
                         Directory containing the instances to solve
 ```
@@ -143,7 +143,8 @@ The solvers output:
 - The Hexaly solver is a commercial optimization tool that may provide better solutions but requires a license
 - All implementations support parallel processing where applicable
 - The solvers include various local search improvements and optimization techniques
-- For ACS, HAS and GA solvers, parameters are hardcoded in the scripts and cannot be modified via command line
+- For ACS, HAS solvers, parameters are placed in `scripts/config.ini`
+- For GA solvers, parameters are placed in `scripts/heuristics/ga/config.py`
 
 ## Example Usage
 
