@@ -13,9 +13,12 @@ def ant_colony_optimization(
     alpha=1,
     beta=2,
     q0=0.9,
-    use_cost_matrix=True,
+    use_cost_matrix=False,
     debug=False,
 ):
+    colony_size = int(colony_size)
+    iterations = int(iterations)
+
     n = len(F)
     pheromone = np.ones((n, n)) / n
     best_cost = float("inf")
@@ -94,7 +97,7 @@ def ant_colony_optimization(
                 print(probabilities[i])
                 print(pheromone_factor)
                 print(max_weight_distance_factor)
-                raise
+                raise ValueError("Probability is NaN")
         probabilities /= probabilities.sum()
         return probabilities
 
@@ -105,44 +108,52 @@ def ant_colony_optimization(
 
     temp_cost = best_cost
     for i in range(iterations):
-        solutions = generate_solutions(colony_size, pheromone, F, D, B, alpha, beta, q0)
-        for solution in solutions:
-            if use_cost_matrix:
-                cost = np.trace(F @ solution @ D @ solution.T - 2*B @ solution.T)
-            else:
-                cost = np.trace(F @ solution @ D @ solution.T)
+        try:
+            solutions = generate_solutions(
+                colony_size, pheromone, F, D, B, alpha, beta, q0
+            )
+            for solution in solutions:
+                if use_cost_matrix:
+                    cost = np.trace(F @ solution @ D @ solution.T - 2 * B @ solution.T)
+                else:
+                    cost = np.trace(F @ solution @ D @ solution.T)
 
-            if cost < best_cost:
-                best_cost = cost
-                best_assignment = solution
-        if use_cost_matrix:
-            pheromone_update(
-                pheromone,
-                [
-                    (
-                        solution,
-                        np.trace(F @ solution @ D @ solution.T - 2*B @ solution.T)
-                    )
-                    for solution in solutions
-                ],
-                rho,
-            )
-        else:
-            pheromone_update(
-                pheromone,
-                [
-                    (solution, np.trace(F @ solution @ D @ solution.T))
-                    for solution in solutions
-                ],
-                rho,
-            )
-        if debug and temp_cost > best_cost:
-            print(
-                "Iter {}\n\tprev cost:{}\n\tcurr cost: {}".format(
-                    i, temp_cost, best_cost
+                if cost < best_cost:
+                    best_cost = cost
+                    best_assignment = solution
+            if use_cost_matrix:
+                pheromone_update(
+                    pheromone,
+                    [
+                        (
+                            solution,
+                            np.trace(
+                                F @ solution @ D @ solution.T - 2 * B @ solution.T
+                            ),
+                        )
+                        for solution in solutions
+                    ],
+                    rho,
                 )
-            )
-            temp_cost = best_cost
+            else:
+                pheromone_update(
+                    pheromone,
+                    [
+                        (solution, np.trace(F @ solution @ D @ solution.T))
+                        for solution in solutions
+                    ],
+                    rho,
+                )
+            if debug and temp_cost > best_cost:
+                print(
+                    "Iter {}\n\tprev cost:{}\n\tcurr cost: {}".format(
+                        i, temp_cost, best_cost
+                    )
+                )
+                temp_cost = best_cost
+        except Exception as e:
+            print(f"Error during iteration {i}: {e}")
+            return None, float("inf")
 
     return best_assignment, best_cost
 
@@ -159,14 +170,14 @@ if __name__ == "__main__":
         instance_path = os.path.join(instance_dir, instance_name)
         instance_file = os.path.join(instance_path, "{}.txt".format(instance_name))
         solution_file = os.path.join(instance_path, "solution.txt")
-        
+
         if not os.path.exists(instance_file):
             print("\tInstance file not found")
             continue
         if not os.path.exists(solution_file):
             print("\tSolution file not found")
             continue
-        
+
         file_it = iter(read_instance(instance_file))
         soln_it = iter(read_instance(solution_file)[1:])
         n = next(file_it)
